@@ -1,1 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
+/* ===================================================
+   FORCE FIX MODAL & CART LAYOUT (DÁN VÀO SRC/STYLES.CSS)
+   =================================================== */
+
+/* 1. Cố định kích thước & khung Modal */
+div[class*="modal-content"], 
+.modal-content {
+  width: 750px !important;
+  max-width: 90vw !important;
+  max-height: 85vh !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+  background: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+  box-sizing: border-box !important;
+}
+
+/* 2. Ép ảnh sản phẩm trong Modal quay về cỡ chuẩn (Tối đa 250px) */
+.modal-content img,
+.detail-img-pane img,
+.cart-table img {
+  width: 100% !important;
+  max-width: 250px !important;
+  height: 250px !important;
+  object-fit: contain !important; /* Đảm bảo không vỡ/méo hình */
+  display: block !important;
+  margin: 0 auto 15px auto !important;
+  border: 1px solid #eee !important;
+  border-radius: 4px !important;
+}
+
+/* 3. Sắp xếp lại khung giao diện chi tiết / giỏ hàng */
+.modal-content .detail-container,
+.modal-content .cart-table {
+  display: grid !important;
+  grid-template-columns: 260px 1fr !important; /* Bên trái: Ảnh 260px, Bên phải: Nội dung */
+  gap: 20px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+/* 4. Định hình lại nút bấm Tăng/Giảm [-] [1] [+] và chữ */
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content .qty-input {
+  width: 50px !important;
+  height: 30px !important;
+  text-align: center !important;
+  border: 1px solid #ccc !important;
+  display: inline-block !important;
+  margin: 0 4px !important;
+}
+
+.modal-content button {
+  padding: 6px 12px !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+}
+
+/* 5. Định dạng lại bảng Giỏ hàng nếu Modal đang chứa Bảng Giỏ hàng */
+.modal-content table, 
+.modal-content tbody, 
+.modal-content tr, 
+.modal-content td {
+  display: block !important; /* Chuyển từ table-row vỡ sang block chuẩn */
+  width: 100% !important;
+}

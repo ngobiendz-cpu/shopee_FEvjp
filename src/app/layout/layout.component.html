@@ -1,0 +1,473 @@
+<div class="shopee-container">
+  <!-- ==================== HEADER CAM SHOPEE ==================== -->
+  <header class="shopee-header">
+    <div class="header-top-bar">
+      <div class="header-top-content">
+        <div class="top-links">
+          <span>Kênh Người Bán</span> | 
+          <span>Trở thành Người bán Shopee</span> | 
+          <span>Tải ứng dụng</span> | 
+          <span>Kết nối 🌐</span>
+        </div>
+        <div class="top-user-links">
+          <span>🔔 Thông Báo</span>
+          <span>❓ Hỗ Trợ</span>
+          <span>🌐 Tiếng Việt</span>
+          <strong>Đăng Nhập / Đăng Ký</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-main">
+      <div class="header-container">
+        <!-- LOGO -->
+        <div class="logo-area" (click)="resetCategory()" style="cursor: pointer;">
+          <span class="logo-icon">🛍️</span>
+          <h1 class="logo-text">BIÊN <span class="logo-sub">FBI</span></h1>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-bar">
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Săn Voucher 50% - Tìm sản phẩm, thương hiệu..." 
+            [(ngModel)]="searchQuery" 
+            (keyup.enter)="onSearch()"
+          >
+          <button class="search-btn" (click)="onSearch()">🔍</button>
+        </div>
+
+        <!-- HEADER ACTIONS -->
+        <div class="header-actions">
+          <button class="btn-header" (click)="openCartModal($event)">
+            🛒 Giỏ hàng <span class="badge-count" *ngIf="cartItems.length > 0">{{ cartItems.length }}</span>
+          </button>
+          <button class="btn-header btn-success" (click)="openAddProductModal($event)">
+            ➕ Đăng bán
+          </button>
+          <button class="btn-header" (click)="openOrdersModal($event)">
+            📦 Đơn hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="app-body">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- ==================== FOOTER ĐẦY ĐỦ ==================== -->
+  <footer class="shopee-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>CHĂM SÓC KHÁCH HÀNG</h4>
+        <p>Trung Tâm Trợ Giúp</p>
+        <p>Hướng Dẫn Mua Hàng</p>
+        <p>Hướng Dẫn Bán Hàng</p>
+        <p>Thanh Toán & Vận Chuyển</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>VỀ BIÊN FBI</h4>
+        <p>Giới Thiệu Shopee Việt Nam</p>
+        <p>Tuyển Dụng</p>
+        <p>Điều Khoản Shopee</p>
+        <p>Chính Sách Bảo Mật</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>THANH TOÁN & ĐỐI TÁC</h4>
+        <div class="partner-tags">
+          <span class="tag">Visa</span>
+          <span class="tag">Mastercard</span>
+          <span class="tag">JCB</span>
+          <span class="tag">Momo</span>
+          <span class="tag">SPayLater</span>
+          <span class="tag">ShopeeExpress</span>
+          <span class="tag">GHTK</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>THEO DÕI CHÚNG TÔI</h4>
+        <p>📘 Facebook</p>
+        <p>📷 Instagram</p>
+        <p>🎬 TikTok</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <p class="copyright">© 2015 - 2026 Công ty TNHH Shopee. Tất cả các quyền được bảo lưu.</p>
+        <p class="company-info">
+          Địa chỉ: Tầng 28, Tòa nhà Trung tâm Lotte Hà Nội, 54 Liễu Giai, Phường Cống Vị, Quận Ba Đình, Hà Nội, Việt Nam.<br>
+          Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Văn A - Điện thoại liên hệ: 024 7308 1221 - Email: cskh&#64;support.shopee.vn<br>
+          Mã số doanh nghiệp: 010677370 do Sở Kế hoạch & Đầu tư TP Hà Nội cấp lần đầu ngày 10/02/2015.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS ==================== -->
+  
+  <!-- 1. MODAL CHI TIẾT SẢN PHẨM -->
+  <div class="modal-overlay" *ngIf="isDetailOpen && selectedProduct" (click)="closeDetailModal()">
+    <div class="modal-content modal-lg" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeDetailModal()">✕</button>
+      <div class="detail-container">
+        <div class="detail-img-pane">
+          <img [src]="selectedProduct.image" [alt]="selectedProduct.name" />
+        </div>
+        <div class="detail-info-pane">
+          <h2 class="detail-title">{{ selectedProduct.name }}</h2>
+          <div class="detail-price-box">
+            <span class="detail-price">{{ selectedProduct.price | number:'1.0-0' }} đ</span>
+          </div>
+          <div class="selection-group" *ngIf="selectedProduct.sizes && selectedProduct.sizes.length > 0">
+            <label class="label-title">Kích thước (Size):</label>
+            <div class="options-container">
+              <button *ngFor="let s of selectedProduct.sizes" class="option-pill" [class.active]="chosenSize === s" (click)="chosenSize = s">{{ s }}</button>
+            </div>
+          </div>
+          <div class="selection-group" *ngIf="selectedProduct.colors && selectedProduct.colors.length > 0">
+            <label class="label-title">Màu sắc:</label>
+            <div class="options-container">
+              <button *ngFor="let c of selectedProduct.colors" class="option-pill" [class.active]="chosenColor === c" (click)="chosenColor = c">{{ c }}</button>
+            </div>
+          </div>
+          <div class="selection-group">
+            <label class="label-title">Số lượng:</label>
+            <div class="quantity-selector">
+              <button class="qty-btn" (click)="decreaseDetailQty()">-</button>
+              <input type="text" readonly [value]="detailQuantity" class="qty-input" />
+              <button class="qty-btn" (click)="increaseDetailQty()">+</button>
+            </div>
+          </div>
+          <p class="detail-description">{{ selectedProduct.description || 'Sản phẩm chính hãng chất lượng cao.' }}</p>
+          <div class="detail-actions">
+            <button class="btn-add-to-cart-outline" (click)="addToCartFromDetail()">Thêm vào giỏ hàng</button>
+            <button class="btn-buy-now" (click)="buyNowFromDetail()">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MODAL GIỎ HÀNG -->
+  <div class="cart-modal-overlay" *ngIf="isCartOpen" (click)="closeCartModal()">
+    <div class="cart-modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>🛒 Giỏ hàng của bạn</h2>
+        <button type="button" class="close-btn" (click)="closeCartModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <table class="cart-table" *ngIf="cartItems.length > 0; else emptyCart">
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+              <th>Thành tiền</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+           <tr *ngFor="let item of cartItems; let i = index; trackBy: trackByItem" class="cart-item-row">
+              <td>
+                <div class="product-info-cell">
+                  <img [src]="item.image" [alt]="item.name" class="product-thumb" />
+                  <div>
+                    <p class="product-name">{{ item.name }}</p>
+                    <p class="product-variant">Phân loại: {{ item.finalSize || 'Free' }} / {{ item.finalColor || 'Tiêu chuẩn' }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="price-text">{{ item.price | number }} đ</td>
+              <td>
+                <div class="qty-control">
+                  <button type="button" (click)="decreaseQty(item); $event.preventDefault(); $event.stopPropagation()">-</button>
+                  <input type="text" readonly [value]="item.quantity || 1" />
+                  <button type="button" (click)="increaseQty(item); $event.preventDefault(); $event.stopPropagation()">+</button>
+                </div>
+              </td>
+              <td class="total-price-text">{{ ((item.price || 0) * (item.quantity || 1)) | number }} đ</td>
+              <td>
+                <button type="button" class="btn-delete" (click)="removeFromCart(i)">🗑 Xóa</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ng-template #emptyCart>
+          <div style="text-align: center; padding: 40px 0; color: #888;">
+            <p style="font-size: 18px;">🛒 Giỏ hàng của bạn đang trống!</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="cart-footer" *ngIf="cartItems.length > 0">
+        <div class="cart-total-summary">
+          Tổng thanh toán: <strong>{{ getCartTotal() | number }} đ</strong>
+        </div>
+        <button type="button" class="btn-checkout" (click)="openCheckoutModal()">Mua hàng ngay</button>
+      </div>
+    </div>
+  </div>
+<!-- MODAL ĐĂNG BÁN SẢN PHẨM MỚI (LAYOUT) -->
+<div class="modal-overlay" *ngIf="showAddProductModal" (click)="closeAddProductModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="modal-title">
+        <span class="title-icon">✨</span>
+        <h3>Đăng bán sản phẩm mới</h3>
+      </div>
+      <button type="button" class="btn-close-modal" (click)="closeAddProductModal()">✕</button>
+    </div>
+
+    <!-- Modal Form Body -->
+    <form (ngSubmit)="addNewProduct($event)" class="modal-body">
+      
+      <!-- Tên sản phẩm -->
+      <div class="form-group">
+        <label class="form-label">Tên sản phẩm <span class="required">*</span></label>
+        <input 
+          type="text" 
+          class="form-input" 
+          [(ngModel)]="newProduct.name" 
+          name="name" 
+          placeholder="Ví dụ: Giày Sneaker Nike Air Force 1..." 
+          required 
+        />
+      </div>
+
+      <!-- Giá & Danh mục -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Giá bán (VNĐ) <span class="required">*</span></label>
+          <input 
+            type="number" 
+            class="form-input" 
+            [(ngModel)]="newProduct.price" 
+            name="price" 
+            placeholder="Ví dụ: 350000" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Danh mục <span class="required">*</span></label>
+          <select class="form-select" [(ngModel)]="newProduct.category" name="category">
+            <option value="shoes">Giày dép</option>
+            <option value="clothing">Thời trang</option>
+            <option value="electronics">Điện tử</option>
+            <option value="accessories">Phụ kiện</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Ảnh sản phẩm -->
+      <div class="form-group">
+        <label class="form-label">Hình ảnh sản phẩm <span class="required">*</span></label>
+        <div class="image-input-group">
+          <input 
+            type="text" 
+            class="form-input" 
+            [(ngModel)]="newProduct.image" 
+            name="image" 
+            placeholder="Dán URL ảnh hoặc chọn file bên cạnh..." 
+          />
+          <label class="btn-upload">
+            📁 Chọn ảnh
+            <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+          </label>
+        </div>
+        <!-- Preview ảnh -->
+        <div class="image-preview" *ngIf="newProduct.image">
+          <img [src]="newProduct.image" alt="Preview sản phẩm" />
+        </div>
+      </div>
+
+      <!-- Mô tả -->
+      <div class="form-group">
+        <label class="form-label">Mô tả sản phẩm</label>
+        <textarea 
+          class="form-textarea" 
+          rows="3" 
+          [(ngModel)]="newProduct.description" 
+          name="description" 
+          placeholder="Nhập chi tiết về chất liệu, kiểu dáng, kích thước..."
+        ></textarea>
+      </div>
+
+      <!-- Footer Action -->
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" (click)="closeAddProductModal()">Hủy bỏ</button>
+        <button type="submit" class="btn-submit">🚀 Đăng sản phẩm ngay</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+  <!-- 4. MODAL THANH TOÁN -->
+  <div class="modal-overlay" *ngIf="isCheckoutOpen" (click)="closeCheckoutModal()">
+    <div class="modal-content modal-checkout" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-header-title">📝 Thông tin thanh toán</h3>
+        <button type="button" class="close-btn" (click)="closeCheckoutModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="processCheckout()">
+          
+          <div class="form-group">
+            <label class="form-label">Họ và tên người nhận <span class="required">*</span></label>
+            <input 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="checkoutInfo.name" 
+              name="cName" 
+              placeholder="Ví dụ: Nguyễn Văn A" 
+              required 
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Số điện thoại <span class="required">*</span></label>
+            <input 
+              type="tel" 
+              class="form-control" 
+              [(ngModel)]="checkoutInfo.phone" 
+              name="cPhone" 
+              placeholder="Ví dụ: 0987654321" 
+              required 
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Địa chỉ giao hàng <span class="required">*</span></label>
+            <textarea 
+              class="form-control" 
+              rows="3" 
+              [(ngModel)]="checkoutInfo.address" 
+              name="cAddress" 
+              placeholder="Số nhà, tên đường, phường/xã, quận/huyện..." 
+              required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phương thức thanh toán</label>
+            <select class="form-control" [(ngModel)]="checkoutInfo.paymentMethod" name="cPayment">
+              <option value="COD">💵 Thanh toán khi nhận hàng (COD)</option>
+              <option value="Momo">🟣 Ví Momo</option>
+              <option value="Banking">🏦 Chuyển khoản ngân hàng</option>
+            </select>
+          </div>
+
+          <div class="checkout-footer-summary">
+            <div class="total-box">
+              <span class="total-label">Tổng thanh toán:</span>
+              <span class="total-amount">{{ getCartTotal() | number:'1.0-0' }} đ</span>
+            </div>
+            <button type="submit" class="btn-confirm-checkout">Xác nhận đặt hàng</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. MODAL ĐƠN HÀNG -->
+  <div class="orders-modal-overlay" *ngIf="isOrdersOpen" (click)="closeOrdersModal()">
+    <div class="orders-modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>📦 Quản lý đơn hàng</h3>
+        <button class="close-btn" (click)="closeOrdersModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Màn hình Xem chi tiết Đơn hàng -->
+        <div *ngIf="selectedOrderTrack; else ordersListTemplate">
+          <button class="btn-back-orders" (click)="selectedOrderTrack = null">← Quay lại danh sách đơn</button>
+          
+          <div class="order-detail-card">
+            <div class="order-info-header">
+              <h4>Mã đơn: <strong>#{{ selectedOrderTrack.id || selectedOrderTrack.orderCode }}</strong></h4>
+              <span class="order-status-badge">{{ selectedOrderTrack.status || 'Đang xử lý' }}</span>
+            </div>
+
+            <p><strong>Người nhận:</strong> {{ selectedOrderTrack.customer?.name }} | {{ selectedOrderTrack.customer?.phone }}</p>
+            <p><strong>Địa chỉ:</strong> {{ selectedOrderTrack.customer?.address }}</p>
+
+            <!-- Thanh Timeline Tiến Trình -->
+            <div class="order-stepper">
+              <div class="step-item active">
+                <div class="step-icon">1</div>
+                <span class="step-label">Đã đặt</span>
+              </div>
+              <div class="step-item active">
+                <div class="step-icon">2</div>
+                <span class="step-label">Đã xác nhận</span>
+              </div>
+              <div class="step-item">
+                <div class="step-icon">3</div>
+                <span class="step-label">Đang giao</span>
+              </div>
+              <div class="step-item">
+                <div class="step-icon">4</div>
+                <span class="step-label">Hoàn thành</span>
+              </div>
+            </div>
+
+            <!-- Danh sách sản phẩm đã mua -->
+            <div class="order-items-list">
+              <div class="order-item-card" *ngFor="let item of selectedOrderTrack.items">
+                <img [src]="item.image" [alt]="item.name" />
+                <div class="order-item-details">
+                  <h5>{{ item.name }}</h5>
+                  <p>Phân loại: Size {{ item.finalSize || 'Free' }}, Màu {{ item.finalColor || 'Tiêu chuẩn' }}</p>
+                  <p>Số lượng: x{{ item.quantity || 1 }}</p>
+                </div>
+                <div class="total-price-text">
+                  {{ ((item.price || 0) * (item.quantity || 1)) | number }} đ
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danh sách tổng hợp các đơn hàng -->
+        <ng-template #ordersListTemplate>
+          <div *ngIf="ordersList.length > 0; else noOrders">
+            <div *ngFor="let order of pagedOrders" class="order-item-card" style="margin-bottom: 12px; cursor: pointer;" (click)="trackOrder(order)">
+              <div class="order-item-details">
+                <h5>Đơn hàng #{{ order.id || order.orderCode }} - {{ order.status || 'Đang xử lý' }}</h5>
+                <p>Tổng tiền: <strong class="total-price-text">{{ (order.total || order.totalPrice || 0) | number }} đ</strong></p>
+              </div>
+        <!-- Pagination cho phân trang -->
+              <div class="pagination" *ngIf="totalOrdersPages > 1">
+  <button [disabled]="ordersCurrentPage === 1" (click)="changeOrdersPage(ordersCurrentPage - 1)">❮</button>
+  <button *ngFor="let page of ordersPageNumbers" [class.active]="page === ordersCurrentPage" (click)="changeOrdersPage(page)">
+    {{ page }}
+  </button>
+  <button [disabled]="ordersCurrentPage === totalOrdersPages" (click)="changeOrdersPage(ordersCurrentPage + 1)">❯</button>
+</div>
+
+
+              <button class="btn-checkout" style="padding: 6px 16px; font-size: 13px;">Chi tiết</button>
+            </div>
+          </div>
+          <ng-template #noOrders>
+            <p style="text-align: center; color: #888; padding: 30px 0;">Bạn chưa có đơn hàng nào!</p>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

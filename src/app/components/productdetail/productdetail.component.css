@@ -1,0 +1,576 @@
+
+
+/* ===============================
+   PRODUCT DETAIL THEME ORANGE
+================================ */
+
+.product-detail-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* TOP BAR */
+.top-bar {
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #e64a19;
+    box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3);
+}
+
+/* ===============================
+   PRODUCT CARD (LAYOUT CHÍNH)
+================================ */
+.product-main-layout {
+    display: flex;
+    gap: 35px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+.product-gallery {
+    flex: 1;
+    max-width: 450px;
+}
+
+.main-image-box {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-summary {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
+    margin: 0;
+}
+
+.rating-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* PRICE */
+.price-box {
+    background: #fff3ef;
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.current-price {
+    color: #ff5722;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* OPTIONS (SIZE / MÀU) */
+.option-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.option-label {
+    width: 90px;
+    font-weight: 600;
+    color: #555;
+}
+
+.option-list {
+    display: flex;
+    gap: 10px;
+}
+
+.option-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #444;
+    transition: all 0.2s;
+}
+
+.option-btn:hover {
+    border-color: #ff5722;
+    color: #ff5722;
+}
+
+.option-btn.active, .option-btn.selected {
+    border-color: #ff5722 !important;
+    color: #ff5722 !important;
+    background: #fff3ef !important;
+}
+
+/* QUANTITY */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.quantity-selector button {
+    width: 36px;
+    height: 36px;
+    background: #f8f8f8;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.quantity-selector input {
+    width: 45px;
+    height: 36px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* BUTTONS */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-add-cart {
+    flex: 1;
+    height: 48px;
+    border: 2px solid #ff5722;
+    background: white;
+    color: #ff5722;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-cart:hover {
+    background: #fff1ed;
+}
+
+.btn-buy-now {
+    flex: 1;
+    height: 48px;
+    border: none;
+    background: #ff5722;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-buy-now:hover {
+    background: #e64a19;
+}
+
+/* ===============================
+        TAB SECTION (FIX TRIỆT ĐỂ)
+================================ */
+.product-tabs-section {
+    margin-top: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.tab-headers {
+    display: flex;
+    background: #fafafa;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Reset hoàn toàn kiểu nút mặc định của trình duyệt */
+.tab-headers button, .tab-btn {
+    flex: 1;
+    padding: 18px;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent !important;
+    border-radius: 0 !important;
+    outline: none !important;
+}
+
+.tab-headers button:hover, .tab-btn:hover {
+    color: #ff5722;
+    background: #fff3ef !important;
+}
+
+.tab-headers button.active, .tab-btn.active {
+    color: #ff5722 !important;
+    background: white !important;
+    border-bottom: 3px solid #ff5722 !important;
+}
+
+/* TAB CONTENT */
+.tab-content {
+    padding: 30px;
+    color: #333;
+    line-height: 1.8;
+}
+
+.tab-content h2, .tab-content h3 {
+    color: #222;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.tab-content ul {
+    padding-left: 20px;
+}
+
+.tab-content li {
+    margin: 8px 0;
+}
+
+/* REVIEW ITEM */
+.review-item {
+    background: #fff7f3;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #ff5722;
+}
+
+.review-item h4 {
+    color: #ff5722;
+    margin: 0 0 8px 0;
+}
+
+.review-item p {
+    margin: 0;
+    color: #555;
+}
+
+/* SIZE TABLE */
+.size-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.size-table th {
+    background: #ff5722;
+    color: white;
+    padding: 14px;
+    font-size: 15px;
+}
+
+.size-table td {
+    border: 1px solid #eee;
+    padding: 12px;
+    text-align: center;
+}
+
+.size-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.size-table tr:hover {
+    background: #fff4ef;
+}
+/* ==========================================
+   FLOATING SIDE ADS (QUẢNG CÁO 2 BÊN LỀ)
+   ========================================== */
+
+/* Khung banner trượt cố định theo màn hình */
+.floating-ad {
+  position: fixed;
+  top: 120px; /* Cách mép trên dưới Header */
+  width: 140px; /* Độ rộng banner vừa đẹp không đè nội dung */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 1px solid #ffe4e0;
+  overflow: hidden;
+  z-index: 99;
+  text-align: center;
+  transition: transform 0.3s ease;
+  animation: floatPulse 3s infinite ease-in-out; /* Hiệu ứng nhấp nháy động */
+}
+
+/* Định vị bên trái và bên phải */
+.float-left {
+  left: 15px;
+}
+
+.float-right {
+  right: 15px;
+}
+
+/* Hiệu ứng Rê chuột vào banner */
+.floating-ad:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(238, 77, 45, 0.25);
+}
+
+/* Nơ gắn nhãn góc trên */
+.ad-ribbon {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ad-ribbon.blue {
+  background: linear-gradient(45deg, #2563eb, #3b82f6);
+}
+
+/* Ảnh quảng cáo */
+.float-ad-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Phần chữ bên dưới ảnh */
+.float-ad-content {
+  padding: 8px 6px 10px 6px;
+}
+
+.float-ad-content h4 {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  color: #ee4d2d;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.float-right .float-ad-content h4 {
+  color: #2563eb;
+}
+
+.float-ad-content p {
+  margin: 0 0 8px 0;
+  font-size: 10px;
+  color: #666;
+  line-height: 1.3;
+}
+
+/* Nút bấm hành động */
+.btn-float-ad {
+  width: 100%;
+  background: #ee4d2d;
+  color: white;
+  border: none;
+  padding: 5px 0;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-float-ad:hover {
+  background: #d73211;
+}
+
+.btn-float-ad.blue-btn {
+  background: #2563eb;
+}
+
+.btn-float-ad.blue-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Animation cử động nhẹ nhàng thu hút ánh nhìn */
+@keyframes floatPulse {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Ẩn banner trên màn hình nhỏ/laptop bé để tránh đè vào giao diện chính */
+@media (max-width: 1580px) {
+  .floating-ad {
+    display: none;
+  }
+}
+
+/* Styling cho Modal Mua Ngay */
+.checkout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.checkout-modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 500px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.product-summary {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.summary-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.summary-info p {
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+.price-text {
+  color: #ee4d2d;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.required {
+  color: red;
+}
+
+.form-group input, .form-group textarea {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  border-color: #ee4d2d;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-cancel {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-submit {
+  padding: 8px 20px;
+  background: #ee4d2d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background: #d73211;
+}

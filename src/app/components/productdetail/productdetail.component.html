@@ -1,0 +1,323 @@
+<div class="product-detail-container" *ngIf="product; else loadingOrNotFound">
+
+  <!-- Nút quay lại trang chủ -->
+  <div class="top-bar">
+    <button class="back-btn" (click)="goBack()">
+      ← Quay lại trang chủ
+    </button>
+  </div>
+
+  <div class="product-main-layout">
+
+    <!-- Ảnh -->
+    <div class="product-gallery">
+      <div class="main-image-box">
+        <img 
+          [src]="selectedImage || product.image" 
+          [alt]="product.name" 
+          class="main-image">
+      </div>
+
+      <div class="thumbnail-list" *ngIf="product.images && product.images.length">
+        <img 
+          *ngFor="let img of product.images" 
+          [src]="img" 
+          class="thumb-img" 
+          [class.active]="selectedImage==img" 
+          (click)="changeMainImage(img)">
+      </div>
+    </div>
+
+    <!-- Thông tin -->
+    <div class="product-summary">
+
+      <h1>{{product.name}}</h1>
+
+      <div class="rating-summary">
+        ⭐⭐⭐⭐⭐
+        <span>4.9</span>
+        <span>|</span>
+        <span>128 đánh giá</span>
+        <span>|</span>
+        <span>356 đã bán</span>
+      </div>
+
+      <div class="price-box">
+        <span class="current-price">
+          {{product.price | number}} đ
+        </span>
+      </div>
+
+      <!-- Size -->
+      <div class="option-group" *ngIf="product.sizes">
+        <label>Chọn Size</label>
+        <div class="option-list">
+          <button 
+            *ngFor="let size of product.sizes" 
+            class="option-btn" 
+            [class.active]="product.chosenSize==size" 
+            (click)="product.chosenSize=size">
+            {{size}}
+          </button>
+        </div>
+      </div>
+
+      <!-- Màu -->
+      <div class="option-group" *ngIf="product.colors">
+        <label>Màu sắc</label>
+        <div class="option-list">
+          <button 
+            *ngFor="let color of product.colors" 
+            class="option-btn" 
+            [class.active]="product.chosenColor==color" 
+            (click)="product.chosenColor=color">
+            {{color}}
+          </button>
+        </div>
+      </div>
+
+      <!-- Số lượng -->
+      <div class="option-group">
+        <label>Số lượng</label>
+        <div class="quantity-selector">
+          <button (click)="decreaseQty()">-</button>
+          <input [(ngModel)]="quantity" readonly>
+          <button (click)="increaseQty()">+</button>
+        </div>
+      </div>
+
+      <!-- Nút -->
+      <div class="action-buttons">
+        <button class="btn-add-cart" (click)="addToCart()">
+          🛒 Thêm vào giỏ hàng
+        </button>
+        <button class="btn-buy-now" (click)="buyNow()">
+          Mua ngay
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Tabs -->
+  <div class="product-tabs-section">
+
+    <div class="tab-headers">
+      <!-- ĐÃ THÊM CLASS tab-btn VÀO ĐÂY -->
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab=='description'" 
+        (click)="setTab('description')">
+        Mô tả sản phẩm
+      </button>
+
+      <!-- ĐÃ THÊM CLASS tab-btn VÀO ĐÂY -->
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab=='reviews'" 
+        (click)="setTab('reviews')">
+        Đánh giá khách hàng
+      </button>
+
+      <!-- ĐÃ THÊM CLASS tab-btn VÀO ĐÂY -->
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab=='sizeGuide'" 
+        (click)="setTab('sizeGuide')">
+        Hướng dẫn chọn Size
+      </button>
+    </div>
+
+    <div class="tab-content">
+
+      <!-- Mô tả -->
+      <div *ngIf="activeTab=='description'">
+        <h2>Mô tả sản phẩm</h2>
+        <p>{{product.description}}</p>
+        <ul>
+          <li>✔ Chính hãng 100%</li>
+          <li>✔ Bảo hành chính hãng</li>
+          <li>✔ Đổi trả 7 ngày</li>
+          <li>✔ Giao hàng toàn quốc</li>
+        </ul>
+      </div>
+
+      <!-- ================= TAB ĐÁNH GIÁ ================= -->
+      <div *ngIf="activeTab=='reviews'">
+        <h2>⭐ Đánh giá khách hàng</h2>
+
+        <div class="review-item">
+          <h4>Nguyễn Văn A</h4>
+          <p>⭐⭐⭐⭐⭐</p>
+          <p>Giao hàng rất nhanh, đóng gói cẩn thận. Giày đẹp giống hình, mang rất êm chân.</p>
+          <small>Đã mua hàng - 25/07/2026</small>
+          <hr>
+        </div>
+
+        <div class="review-item">
+          <h4>Trần Thị B</h4>
+          <p>⭐⭐⭐⭐⭐</p>
+          <p>Chất lượng rất tốt, đúng size, sẽ tiếp tục ủng hộ shop.</p>
+          <small>Đã mua hàng - 20/07/2026</small>
+          <hr>
+        </div>
+
+        <div class="review-item">
+          <h4>Lê Minh C</h4>
+          <p>⭐⭐⭐⭐⭐</p>
+          <p>Đóng gói đẹp, sản phẩm chính hãng, rất hài lòng.</p>
+          <small>Đã mua hàng - 18/07/2026</small>
+        </div>
+      </div>
+
+      <!-- ================= TAB SIZE ================= -->
+      <div *ngIf="activeTab=='sizeGuide'">
+        
+        <!-- Bảng size giày -->
+        <div *ngIf="product.category=='shoes'">
+          <h2>👟 Bảng Size Giày</h2>
+          <p>Đo chiều dài bàn chân để chọn size phù hợp.</p>
+          <table class="size-table">
+            <tr>
+              <th>Size</th>
+              <th>Chiều dài bàn chân</th>
+            </tr>
+            <tr><td>38</td><td>23.5 - 24 cm</td></tr>
+            <tr><td>39</td><td>24 - 24.5 cm</td></tr>
+            <tr><td>40</td><td>24.5 - 25 cm</td></tr>
+            <tr><td>41</td><td>25 - 25.5 cm</td></tr>
+            <tr><td>42</td><td>25.5 - 26 cm</td></tr>
+            <tr><td>43</td><td>26 - 26.5 cm</td></tr>
+          </table>
+        </div>
+
+        <!-- Bảng size quần áo -->
+        <div *ngIf="product.category=='clothing'">
+          <h2>👕 Bảng Size Quần Áo</h2>
+          <p>Nếu phân vân giữa hai size hãy chọn size lớn hơn.</p>
+          <table class="size-table">
+            <tr>
+              <th>Size</th>
+              <th>Chiều cao</th>
+              <th>Cân nặng</th>
+            </tr>
+            <tr><td>S</td><td>150-160 cm</td><td>45-53 kg</td></tr>
+            <tr><td>M</td><td>160-168 cm</td><td>54-62 kg</td></tr>
+            <tr><td>L</td><td>168-175 cm</td><td>63-70 kg</td></tr>
+            <tr><td>XL</td><td>175-180 cm</td><td>71-80 kg</td></tr>
+            <tr><td>XXL</td><td>180-185 cm</td><td>81-90 kg</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BANNER QUẢNG CÁO TRƯỢT 2 BÊN LỀ -->
+<div class="floating-ads-container">
+  
+  <!-- Banner bên trái -->
+  <div class="floating-ad float-left">
+    <div class="ad-ribbon">HOT SALE</div>
+    <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=300" alt="Săn Sale Off" class="float-ad-img">
+    <div class="float-ad-content">
+      <h4>🔥 SĂN SALE T3</h4>
+      <p>Giảm tới 50% toàn bộ gian hàng</p>
+      <button class="btn-float-ad">MUA NGAY</button>
+    </div>
+  </div>
+
+  <!-- Banner bên phải -->
+  <div class="floating-ad float-right">
+    <div class="ad-ribbon blue">ƯU ĐÃI</div>
+    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=300" alt="Mở Thẻ Tín Dụng" class="float-ad-img">
+    <div class="float-ad-content">
+      <h4>💳 MỞ THẺ TÍN DỤNG</h4>
+      <p>Hoàn tiền 10% khi thanh toán</p>
+      <button class="btn-float-ad blue-btn">MỞ THẺ NGAY</button>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<ng-template #loadingOrNotFound>
+  <div class="not-found" style="text-align: center; padding: 50px 20px;">
+    <h2>Không tìm thấy sản phẩm!</h2>
+    <button class="btn-buy-now" (click)="goBack()">
+      Quay lại trang chủ
+    </button>
+  </div>
+</ng-template>
+<!-- ==================== MODAL ĐIỀN THÔNG TIN MUA NGAY ==================== -->
+<div class="checkout-modal-overlay" *ngIf="showCheckoutModal">
+  <div class="checkout-modal-content">
+    <div class="modal-header">
+      <h2>📋 XÁC NHẬN ĐẶT HÀNG MUA NGAY</h2>
+      <button class="btn-close" (click)="closeCheckoutModal()">×</button>
+    </div>
+
+    <form (submit)="confirmAndSubmitOrder($event)">
+      <!-- Thông tin sản phẩm chuẩn bị mua -->
+      <div class="product-summary" *ngIf="product">
+        <img [src]="product.image" [alt]="product.name" class="summary-img" />
+        <div class="summary-info">
+          <h4>{{ product.name }}</h4>
+          <p>Phân loại: <strong>{{ product.chosenSize }} / {{ product.chosenColor }}</strong></p>
+          <p>Số lượng: <strong>{{ quantity }}</strong></p>
+          <p class="price-text">Thành tiền: <strong>{{ (product.price * quantity) | number }} đ</strong></p>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- Form điền thông tin khách hàng -->
+      <div class="form-group">
+        <label>Họ và tên người nhận <span class="required">*</span></label>
+        <input 
+          type="text" 
+          [(ngModel)]="customerName" 
+          name="customerName" 
+          placeholder="Ví dụ: Nguyễn Văn A" 
+          required />
+      </div>
+
+      <div class="form-group">
+        <label>Số điện thoại <span class="required">*</span></label>
+        <input 
+          type="tel" 
+          [(ngModel)]="customerPhone" 
+          name="customerPhone" 
+          placeholder="Ví dụ: 0987654321" 
+          required />
+      </div>
+
+      <div class="form-group">
+        <label>Địa chỉ nhận hàng <span class="required">*</span></label>
+        <textarea 
+          [(ngModel)]="customerAddress" 
+          name="customerAddress" 
+          rows="2" 
+          placeholder="Số nhà, tên đường, phường/xã, quận/huyện..." 
+          required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Ghi chú đơn hàng</label>
+        <input 
+          type="text" 
+          [(ngModel)]="customerNote" 
+          name="customerNote" 
+          placeholder="Giao giờ hành chính, gọi trước khi giao..." />
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeCheckoutModal()">Hủy</button>
+        <button type="submit" class="btn-submit">Xác nhận đặt hàng</button>
+      </div>
+    </form>
+  </div>
+</div>
