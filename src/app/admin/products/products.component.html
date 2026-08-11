@@ -1,0 +1,587 @@
+<div class="products-page">
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="products-header">
+
+    <div>
+
+      <h1>
+        Quản lý sản phẩm
+      </h1>
+
+      <p>
+        Quản lý danh sách sản phẩm của cửa hàng
+      </p>
+
+    </div>
+
+
+    <button
+      class="btn-add"
+      type="button"
+      (click)="openAddForm()"
+    >
+
+      + Thêm sản phẩm
+
+    </button>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       BẢNG SẢN PHẨM
+  ====================================================== -->
+
+  <div class="table-container">
+
+    <table class="products-table">
+
+
+      <thead>
+
+        <tr>
+
+          <th>
+            STT
+          </th>
+
+          <th>
+            ID
+          </th>
+
+          <th>
+            Ảnh
+          </th>
+
+          <th>
+            Tên sản phẩm
+          </th>
+
+          <th>
+            Danh mục
+          </th>
+
+          <th>
+            Giá
+          </th>
+
+          <th>
+            Thao tác
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+
+      <tbody>
+
+
+        <!-- CÓ SẢN PHẨM -->
+
+        <tr
+          *ngFor="
+            let product of pagedProducts;
+            let i = index
+          "
+        >
+
+
+          <td>
+
+            {{
+              (currentPage - 1)
+              * pageSize
+              + i + 1
+            }}
+
+          </td>
+
+
+
+          <td>
+
+            {{ product.id }}
+
+          </td>
+
+
+
+          <!-- ẢNH -->
+
+          <td>
+
+            <img
+              class="product-image"
+              [src]="product.image"
+              [alt]="product.name"
+            />
+
+          </td>
+
+
+
+          <!-- TÊN -->
+
+          <td>
+
+            <strong>
+              {{ product.name }}
+            </strong>
+
+
+            <small
+              *ngIf="product.description"
+              class="description"
+            >
+
+              {{ product.description }}
+
+            </small>
+
+          </td>
+
+
+
+          <!-- DANH MỤC -->
+
+          <td>
+
+            <span class="category-badge">
+
+              {{
+                product.category === 'shoes'
+                  ? 'Giày dép'
+                  : 'Thời trang'
+              }}
+
+            </span>
+
+          </td>
+
+
+
+          <!-- GIÁ -->
+
+          <td class="price">
+
+            {{ product.price | number:'1.0-0' }} ₫
+
+          </td>
+
+
+
+          <!-- THAO TÁC -->
+
+          <td>
+
+            <div class="action-buttons">
+
+
+              <button
+                type="button"
+                class="btn-edit"
+                (click)="openEditForm(product)"
+              >
+
+                ✏️ Sửa
+
+              </button>
+
+
+
+              <button
+                type="button"
+                class="btn-delete"
+                (click)="deleteProduct(product)"
+              >
+
+                🗑️ Xóa
+
+              </button>
+
+
+            </div>
+
+          </td>
+
+
+        </tr>
+
+
+
+        <!-- KHÔNG CÓ SẢN PHẨM -->
+
+        <tr
+          *ngIf="
+            pagedProducts.length === 0
+          "
+        >
+
+          <td
+            colspan="7"
+            class="empty-products"
+          >
+
+            📦 Chưa có sản phẩm nào.
+
+          </td>
+
+        </tr>
+
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       PHÂN TRANG
+  ====================================================== -->
+
+  <div
+    class="pagination"
+    *ngIf="totalPages > 1"
+  >
+
+
+    <button
+      type="button"
+      class="page-btn"
+      [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)"
+    >
+
+      ‹
+
+    </button>
+
+
+
+    <button
+      type="button"
+      class="page-number"
+      *ngFor="let page of pageNumbers"
+      [class.active]="
+        page === currentPage
+      "
+      (click)="changePage(page)"
+    >
+
+      {{ page }}
+
+    </button>
+
+
+
+    <button
+      type="button"
+      class="page-btn"
+      [disabled]="
+        currentPage === totalPages
+      "
+      (click)="changePage(currentPage + 1)"
+    >
+
+      ›
+
+    </button>
+
+
+  </div>
+
+
+
+  <!-- =====================================================
+       MODAL THÊM / SỬA SẢN PHẨM
+  ====================================================== -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showForm"
+  >
+
+
+    <div class="product-modal">
+
+
+      <!-- HEADER MODAL -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2>
+
+            {{
+              isEditMode
+                ? 'Sửa sản phẩm'
+                : 'Thêm sản phẩm mới'
+            }}
+
+          </h2>
+
+          <p>
+            Nhập thông tin sản phẩm bên dưới
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeForm()"
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+
+      <!-- FORM -->
+
+      <form
+        (ngSubmit)="submitProduct()"
+      >
+
+
+        <!-- =================================================
+             TÊN
+        ================================================== -->
+
+        <div class="form-group">
+
+          <label>
+            Tên sản phẩm
+            <span>*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-input"
+            [(ngModel)]="productForm.name"
+            name="name"
+            placeholder="Nhập tên sản phẩm..."
+          />
+
+        </div>
+
+
+
+        <!-- =================================================
+             DANH MỤC + GIÁ
+        ================================================== -->
+
+        <div class="form-row">
+
+
+          <div class="form-group">
+
+            <label>
+              Danh mục
+              <span>*</span>
+            </label>
+
+            <select
+              class="form-input"
+              [(ngModel)]="productForm.category"
+              name="category"
+            >
+
+              <option value="shoes">
+                Giày dép (shoes)
+              </option>
+
+              <option value="clothing">
+                Thời trang (clothing)
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+          <div class="form-group">
+
+            <label>
+              Giá bán (VNĐ)
+              <span>*</span>
+            </label>
+
+            <input
+              type="number"
+              class="form-input"
+              [(ngModel)]="productForm.price"
+              name="price"
+              min="1"
+              placeholder="Nhập giá..."
+            />
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ẢNH SẢN PHẨM
+        ================================================== -->
+
+        <div class="form-group">
+
+          <label>
+
+            Hình ảnh sản phẩm
+            <span>*</span>
+
+          </label>
+
+
+
+          <div class="upload-area">
+
+
+            <!-- NÚT CHỌN FILE -->
+
+            <label
+              class="upload-button"
+            >
+
+              📁 Tải ảnh từ máy
+
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                (change)="onFileSelected($event)"
+              />
+
+            </label>
+
+
+
+            <span class="upload-or">
+              hoặc
+            </span>
+
+
+
+            <!-- LINK ẢNH -->
+
+            <input
+              type="text"
+              class="form-input image-url-input"
+              [(ngModel)]="productForm.image"
+              name="image"
+              placeholder="Dán link ảnh https://..."
+            />
+
+          </div>
+
+
+
+          <!-- PREVIEW -->
+
+          <div
+            class="image-preview"
+            *ngIf="productForm.image"
+          >
+
+            <p>
+              Xem trước ảnh
+            </p>
+
+            <img
+              [src]="productForm.image"
+              alt="Xem trước sản phẩm"
+            />
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             MÔ TẢ
+        ================================================== -->
+
+        <div class="form-group">
+
+          <label>
+            Mô tả sản phẩm
+          </label>
+
+          <textarea
+            class="form-input textarea"
+            [(ngModel)]="productForm.description"
+            name="description"
+            rows="5"
+            placeholder="Nhập mô tả chi tiết sản phẩm..."
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- =================================================
+             BUTTON
+        ================================================== -->
+
+        <div class="form-actions">
+
+
+          <button
+            type="button"
+            class="btn-cancel"
+            (click)="closeForm()"
+          >
+
+            Hủy bỏ
+
+          </button>
+
+
+
+          <button
+            type="submit"
+            class="btn-submit"
+          >
+
+            {{
+              isEditMode
+                ? '💾 Lưu thay đổi'
+                : '➕ Thêm sản phẩm'
+            }}
+
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+  </div>
+
+</div>

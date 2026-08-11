@@ -1,0 +1,749 @@
+/* =====================================================
+   TRANG SẢN PHẨM
+===================================================== */
+
+.products-page {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.products-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+
+.products-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  color: #222;
+}
+
+
+.products-header p {
+  margin: 7px 0 0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   NÚT THÊM
+===================================================== */
+
+.btn-add {
+  border: none;
+
+  background: #ee4d2d;
+
+  color: white;
+
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.btn-add:hover {
+  background: #d84324;
+
+  transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   BẢNG
+===================================================== */
+
+.table-container {
+  background: white;
+
+  border-radius: 12px;
+
+  overflow-x: auto;
+
+  box-shadow:
+    0 3px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+.products-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 900px;
+}
+
+
+.products-table thead {
+  background: #fafafa;
+}
+
+
+.products-table th {
+  padding: 16px;
+
+  text-align: left;
+
+  font-size: 14px;
+
+  color: #444;
+
+  border-bottom: 1px solid #eee;
+}
+
+
+.products-table td {
+  padding: 15px 16px;
+
+  border-bottom: 1px solid #eee;
+
+  vertical-align: middle;
+
+  font-size: 14px;
+
+  color: #333;
+}
+
+
+.products-table tbody tr {
+  transition: 0.15s;
+}
+
+
+.products-table tbody tr:hover {
+  background: #fff8f6;
+}
+
+
+/* =====================================================
+   ẢNH SẢN PHẨM
+===================================================== */
+
+.product-image {
+  width: 70px;
+
+  height: 70px;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+
+  border: 1px solid #eee;
+
+  background: #f7f7f7;
+}
+
+
+.description {
+  display: block;
+
+  margin-top: 5px;
+
+  max-width: 300px;
+
+  color: #888;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+.category-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  background: #fff3ed;
+
+  color: #ee4d2d;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   GIÁ
+===================================================== */
+
+.price {
+  color: #ee4d2d !important;
+
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   NÚT SỬA / XÓA
+===================================================== */
+
+.action-buttons {
+  display: flex;
+
+  gap: 8px;
+}
+
+
+.btn-edit,
+.btn-delete {
+  border: none;
+
+  padding: 8px 12px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition: 0.2s;
+}
+
+
+.btn-edit {
+  background: #fff3cd;
+
+  color: #856404;
+}
+
+
+.btn-edit:hover {
+  background: #ffe69c;
+}
+
+
+.btn-delete {
+  background: #ffe5e5;
+
+  color: #dc3545;
+}
+
+
+.btn-delete:hover {
+  background: #ffcccc;
+}
+
+
+/* =====================================================
+   KHÔNG CÓ SẢN PHẨM
+===================================================== */
+
+.empty-products {
+  text-align: center !important;
+
+  padding: 50px !important;
+
+  color: #999 !important;
+
+  font-size: 16px !important;
+}
+
+
+/* =====================================================
+   PHÂN TRANG
+===================================================== */
+
+.pagination {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  margin-top: 25px;
+
+  margin-bottom: 20px;
+}
+
+
+.page-btn,
+.page-number {
+  width: 38px;
+
+  height: 38px;
+
+  border-radius: 7px;
+
+  border: 1px solid #ddd;
+
+  background: white;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+
+.page-btn:hover:not(:disabled),
+.page-number:hover {
+  border-color: #ee4d2d;
+
+  color: #ee4d2d;
+}
+
+
+.page-number.active {
+  background: #ee4d2d;
+
+  color: white;
+
+  border-color: #ee4d2d;
+}
+
+
+.page-btn:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+
+  overflow-y: auto;
+}
+
+
+.product-modal {
+  width: 100%;
+
+  max-width: 720px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: white;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =====================================================
+   MODAL HEADER
+===================================================== */
+
+.modal-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  padding: 25px 28px;
+
+  border-bottom: 1px solid #eee;
+}
+
+
+.modal-header h2 {
+  margin: 0;
+
+  font-size: 23px;
+
+  color: #222;
+}
+
+
+.modal-header p {
+  margin: 6px 0 0;
+
+  color: #888;
+
+  font-size: 13px;
+}
+
+
+.btn-close {
+  width: 36px;
+
+  height: 36px;
+
+  border: none;
+
+  background: #f5f5f5;
+
+  border-radius: 50%;
+
+  font-size: 24px;
+
+  color: #777;
+
+  cursor: pointer;
+
+  line-height: 1;
+}
+
+
+.btn-close:hover {
+  background: #ffe5df;
+
+  color: #ee4d2d;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.product-modal form {
+  padding: 25px 28px;
+}
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+}
+
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #444;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+.form-group label span {
+  color: #ee4d2d;
+}
+
+
+.form-input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d8d8d8;
+
+  border-radius: 7px;
+
+  padding: 11px 13px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: 0.2s;
+
+  background: white;
+}
+
+
+.form-input:focus {
+  border-color: #ee4d2d;
+
+  box-shadow:
+    0 0 0 3px rgba(238, 77, 45, 0.1);
+}
+
+
+.textarea {
+  resize: vertical;
+
+  min-height: 110px;
+}
+
+
+/* =====================================================
+   UPLOAD ẢNH
+===================================================== */
+
+.upload-area {
+  border: 2px dashed #d8d8d8;
+
+  border-radius: 10px;
+
+  padding: 20px;
+
+  background: #fafafa;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+}
+
+
+.upload-area:hover {
+  border-color: #ee4d2d;
+
+  background: #fffaf8;
+}
+
+
+.upload-button {
+  display: inline-flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin: 0 !important;
+
+  padding: 11px 16px;
+
+  background: #ee4d2d;
+
+  color: white !important;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  font-size: 13px !important;
+
+  font-weight: 600 !important;
+
+  white-space: nowrap;
+
+  transition: 0.2s;
+}
+
+
+.upload-button:hover {
+  background: #d84324;
+}
+
+
+.upload-or {
+  color: #999;
+
+  font-size: 13px;
+}
+
+
+.image-url-input {
+  flex: 1;
+
+  min-width: 220px;
+}
+
+
+/* =====================================================
+   XEM TRƯỚC ẢNH
+===================================================== */
+
+.image-preview {
+  margin-top: 15px;
+
+  padding: 15px;
+
+  border: 1px solid #eee;
+
+  border-radius: 10px;
+
+  background: #fafafa;
+
+  text-align: center;
+}
+
+
+.image-preview p {
+  margin: 0 0 10px;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+.image-preview img {
+  max-width: 220px;
+
+  max-height: 220px;
+
+  object-fit: contain;
+
+  border-radius: 8px;
+
+  border: 1px solid #eee;
+
+  background: white;
+}
+
+
+/* =====================================================
+   FORM BUTTON
+===================================================== */
+
+.form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 10px;
+}
+
+
+.btn-cancel,
+.btn-submit {
+  border: none;
+
+  padding: 11px 20px;
+
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+.btn-cancel {
+  background: #eee;
+
+  color: #555;
+}
+
+
+.btn-cancel:hover {
+  background: #ddd;
+}
+
+
+.btn-submit {
+  background: #ee4d2d;
+
+  color: white;
+}
+
+
+.btn-submit:hover {
+  background: #d84324;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .products-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+
+  .product-modal {
+    max-height: 95vh;
+  }
+
+
+  .product-modal form {
+    padding: 20px;
+  }
+
+
+  .modal-header {
+    padding: 20px;
+  }
+
+
+  .upload-area {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .upload-button {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  .image-url-input {
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,167 @@
+/* ================================
+   ADMIN LAYOUT
+================================ */
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ================================
+   SIDEBAR
+================================ */
+
+.admin-sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ee4d2d, #d84324);
+  color: white;
+  padding: 25px 15px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+
+/* Logo */
+
+.admin-logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 5px 30px;
+  letter-spacing: 1px;
+}
+
+
+/* Menu */
+
+.admin-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.admin-sidebar nav a {
+  display: block;
+  padding: 14px 18px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+
+/* Hover */
+
+.admin-sidebar nav a:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateX(4px);
+}
+
+
+/* Link đang được chọn */
+
+.admin-sidebar nav a.active {
+  background: white;
+  color: #ee4d2d;
+  font-weight: bold;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+.admin-main {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  min-height: 100vh;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.admin-header {
+  height: 70px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.admin-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+
+/* Nút đăng xuất */
+
+.admin-header button {
+  border: none;
+  background: #ee4d2d;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+.admin-header button:hover {
+  background: #d84324;
+  transform: translateY(-1px);
+}
+
+
+/* ================================
+   CONTENT
+================================ */
+
+.admin-content {
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+
+  .admin-sidebar {
+    width: 190px;
+  }
+
+  .admin-main {
+    margin-left: 190px;
+    width: calc(100% - 190px);
+  }
+
+  .admin-logo {
+    font-size: 18px;
+  }
+
+  .admin-sidebar nav a {
+    font-size: 14px;
+  }
+
+}

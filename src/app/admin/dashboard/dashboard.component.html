@@ -1,0 +1,114 @@
+<div class="dashboard-page">
+
+  <!-- TIÊU ĐỀ -->
+
+  <div class="dashboard-title">
+
+    <h1>Dashboard</h1>
+
+    <p>
+      Chào mừng bạn đến với trang quản trị.
+    </p>
+
+  </div>
+
+
+  <!-- CÁC THỐNG KÊ -->
+
+  <div class="dashboard-cards">
+
+
+    <!-- SẢN PHẨM -->
+
+    <div class="dashboard-card product-card">
+
+      <div class="card-icon">
+        📦
+      </div>
+
+      <div class="card-info">
+
+        <h3>
+          Tổng sản phẩm
+        </h3>
+
+        <strong>
+          {{ totalProducts }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ĐƠN HÀNG -->
+
+    <div class="dashboard-card order-card">
+
+      <div class="card-icon">
+        🛒
+      </div>
+
+      <div class="card-info">
+
+        <h3>
+          Tổng đơn hàng
+        </h3>
+
+        <strong>
+          {{ totalOrders }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- NGƯỜI DÙNG -->
+
+    <div class="dashboard-card user-card">
+
+      <div class="card-icon">
+        👤
+      </div>
+
+      <div class="card-info">
+
+        <h3>
+          Người dùng
+        </h3>
+
+        <strong>
+          {{ totalUsers }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- DOANH THU -->
+
+    <div class="dashboard-card revenue-card">
+
+      <div class="card-icon">
+        💰
+      </div>
+
+      <div class="card-info">
+
+        <h3>
+          Doanh thu
+        </h3>
+
+        <strong>
+          {{ totalRevenue | number:'1.0-0' }} ₫
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

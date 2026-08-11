@@ -1,0 +1,595 @@
+<div class="orders-page">
+
+  <!-- ============================= -->
+  <!-- HEADER -->
+  <!-- ============================= -->
+
+  <div class="page-header">
+
+    <div>
+
+      <div class="title-row">
+
+        <div class="title-icon">
+          📦
+        </div>
+
+        <div>
+
+          <h1>
+            Quản lý đơn hàng
+          </h1>
+
+          <p>
+            Theo dõi và xử lý đơn hàng của khách hàng
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="order-count">
+
+      <span>
+        Tổng số đơn
+      </span>
+
+      <strong>
+        {{ orders.length }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- KHÔNG CÓ ĐƠN -->
+  <!-- ============================= -->
+
+  <div
+    *ngIf="orders.length === 0"
+    class="empty-orders"
+  >
+
+    <div class="empty-icon">
+      📦
+    </div>
+
+    <h3>
+      Chưa có đơn hàng
+    </h3>
+
+    <p>
+      Hiện tại chưa có đơn hàng nào.
+    </p>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- BẢNG ĐƠN HÀNG -->
+  <!-- ============================= -->
+
+  <div
+    *ngIf="orders.length > 0"
+    class="table-card"
+  >
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>STT</th>
+
+            <th>Mã đơn</th>
+
+            <th>Khách hàng</th>
+
+            <th>Số điện thoại</th>
+
+            <th>Tổng tiền</th>
+
+            <th>Trạng thái</th>
+
+            <th>Ngày đặt</th>
+
+            <th>Thao tác</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let order of pagedOrders;
+              let i = index
+            "
+          >
+
+            <!-- STT -->
+
+            <td class="stt">
+
+              {{
+                (currentPage - 1) *
+                pageSize +
+                i +
+                1
+              }}
+
+            </td>
+
+
+            <!-- MÃ ĐƠN -->
+
+            <td>
+
+              <strong class="order-code">
+
+                #{{ order.orderCode }}
+
+              </strong>
+
+            </td>
+
+
+            <!-- KHÁCH -->
+
+            <td>
+
+              <div class="customer">
+
+                <div class="customer-avatar">
+                  👤
+                </div>
+
+                <span>
+                  {{ order.customer?.name || 'Khách hàng' }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- SĐT -->
+
+            <td>
+
+              {{ order.customer?.phone || '---' }}
+
+            </td>
+
+
+            <!-- TỔNG TIỀN -->
+
+            <td>
+
+              <strong class="price">
+
+                {{
+                  order.totalPrice
+                    | currency:'VND'
+                }}
+
+              </strong>
+
+            </td>
+
+
+            <!-- TRẠNG THÁI -->
+
+            <td>
+
+              <span
+                class="status"
+                [class.confirmed]="
+                  order.status === 'Đã xác nhận'
+                "
+              >
+
+                <span class="status-dot">
+                </span>
+
+                {{
+                  order.status ||
+                  'Đang xử lý'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <!-- NGÀY -->
+
+            <td>
+
+              {{
+                order.createdAt
+                  | date:'dd/MM/yyyy HH:mm'
+              }}
+
+            </td>
+
+
+            <!-- THAO TÁC -->
+
+            <td class="actions">
+
+              <button
+                class="btn-detail"
+                type="button"
+                (click)="viewOrderDetail(order)"
+              >
+
+                👁 Chi tiết
+
+              </button>
+
+
+              <button
+                class="btn-delete"
+                type="button"
+                (click)="deleteOrder(i)"
+              >
+
+                🗑 Xóa
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- PHÂN TRANG -->
+  <!-- ============================= -->
+
+  <div
+    class="pagination"
+    *ngIf="totalPages > 1"
+  >
+
+    <button
+      type="button"
+      [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)"
+    >
+      ❮
+    </button>
+
+
+    <button
+      type="button"
+      *ngFor="let page of pageNumbers"
+      [class.active]="page === currentPage"
+      (click)="changePage(page)"
+    >
+
+      {{ page }}
+
+    </button>
+
+
+    <button
+      type="button"
+      [disabled]="currentPage === totalPages"
+      (click)="changePage(currentPage + 1)"
+    >
+      ❯
+    </button>
+
+  </div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL CHI TIẾT ĐƠN HÀNG -->
+<!-- ================================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showDetail"
+  (click)="closeOrderDetail()"
+>
+
+
+  <div
+    class="order-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+
+    <!-- MODAL HEADER -->
+
+    <div class="modal-header">
+
+      <div>
+
+        <span class="modal-label">
+          CHI TIẾT ĐƠN HÀNG
+        </span>
+
+        <h2>
+
+          #{{ selectedOrder?.orderCode }}
+
+        </h2>
+
+      </div>
+
+
+      <button
+        class="close-btn"
+        type="button"
+        (click)="closeOrderDetail()"
+      >
+
+        ×
+
+      </button>
+
+    </div>
+
+
+    <!-- THÔNG TIN KHÁCH -->
+
+    <div class="customer-box">
+
+      <div class="section-title">
+
+        👤 Thông tin khách hàng
+
+      </div>
+
+
+      <div class="customer-info">
+
+        <div>
+
+          <span>
+            Họ tên
+          </span>
+
+          <strong>
+            {{
+              selectedOrder?.customer?.name ||
+              '---'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Số điện thoại
+          </span>
+
+          <strong>
+            {{
+              selectedOrder?.customer?.phone ||
+              '---'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Địa chỉ
+          </span>
+
+          <strong>
+            {{
+              selectedOrder?.customer?.address ||
+              selectedOrder?.address ||
+              'Chưa cập nhật'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SẢN PHẨM -->
+
+    <div class="products-section">
+
+      <div class="section-title">
+
+        🛍 Sản phẩm đã đặt
+
+      </div>
+
+
+      <div
+        class="product-item"
+        *ngFor="
+          let item of getOrderItems(selectedOrder)
+        "
+      >
+
+        <!-- ẢNH -->
+
+        <div class="product-image">
+
+          <img
+            *ngIf="getItemImage(item)"
+            [src]="getItemImage(item)"
+            [alt]="getItemName(item)"
+          >
+
+          <span
+            *ngIf="!getItemImage(item)"
+          >
+            📦
+          </span>
+
+        </div>
+
+
+        <!-- THÔNG TIN -->
+
+        <div class="product-info">
+
+          <strong>
+            {{ getItemName(item) }}
+          </strong>
+
+          <span>
+            Số lượng:
+            {{ getItemQuantity(item) }}
+          </span>
+
+        </div>
+
+
+        <!-- GIÁ -->
+
+        <div class="product-price">
+
+          {{
+            getItemPrice(item)
+              | currency:'VND'
+          }}
+
+        </div>
+
+      </div>
+
+
+      <!-- Nếu không có items -->
+
+      <div
+        class="no-products"
+        *ngIf="
+          getOrderItems(selectedOrder).length === 0
+        "
+      >
+
+        Không tìm thấy thông tin sản phẩm
+        trong đơn hàng.
+
+      </div>
+
+    </div>
+
+
+    <!-- TỔNG TIỀN -->
+
+    <div class="total-box">
+
+      <span>
+        Tổng thanh toán
+      </span>
+
+      <strong>
+
+        {{
+          selectedOrder?.totalPrice
+            | currency:'VND'
+        }}
+
+      </strong>
+
+    </div>
+
+
+    <!-- TRẠNG THÁI -->
+
+    <div class="current-status">
+
+      <span>
+        Trạng thái hiện tại:
+      </span>
+
+
+      <span
+        class="status"
+        [class.confirmed]="
+          selectedOrder?.status === 'Đã xác nhận'
+        "
+      >
+
+        <span class="status-dot">
+        </span>
+
+        {{
+          selectedOrder?.status ||
+          'Đang xử lý'
+        }}
+
+      </span>
+
+    </div>
+
+
+    <!-- BUTTON -->
+
+    <div class="modal-actions">
+
+      <button
+        class="btn-close"
+        type="button"
+        (click)="closeOrderDetail()"
+      >
+
+        Đóng
+
+      </button>
+
+
+      <button
+        class="btn-confirm"
+        type="button"
+        [disabled]="
+          selectedOrder?.status === 'Đã xác nhận'
+        "
+        (click)="confirmOrder()"
+      >
+
+        ✓
+        {{
+          selectedOrder?.status === 'Đã xác nhận'
+            ? 'Đã xác nhận'
+            : 'Xác nhận đơn hàng'
+        }}
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
